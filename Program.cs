@@ -62,14 +62,30 @@
             return false;
         }
 
+        public static bool TrySumIfOddLatest(int a, int b, out int sum1)
+        {
+            sum1 = 0;
+            int length = b - a;
+
+            for (int i = 0; i < length + 1; i++)
+            {
+                sum1 = sum1 + a + i;
+            }
+            
+            if (sum1 % 2 != 0) return true;
+
+            return false;
+        }
         public static string Repeat(string x, int n)
         {
             if (n == 0) return string.Empty;
             return x + Repeat(x, --n);
         }
+        
         static void Main(string[] args)
         {
             Random random = new Random();
+
             double a = random.NextDouble() * 10;
             double b = random.NextDouble() * 10;
             double c = random.NextDouble() * 10;
@@ -88,17 +104,51 @@
                 $" is '{MinValue(a, b, c, d):N3}'");
             Console.WriteLine();
 
-            int x = random.Next(1, 11);
-            int y = random.Next(1, 11);
+
+            
+            int x = random.Next(2, 11);
+            int y = random.Next(2, 11);
 
             Console.WriteLine($"The number are: {x} and {y}.");
 
-            Console.WriteLine($"The statement that the sum of all numbers between them" +
-                $" excluding {x} and {y} is {TrySumIfOdd(x, y, out int sum)}");
+            // TrySumIfOdd excluding arguments from sum
+            Console.WriteLine($"The sum of numbers between {x} and {y}" +
+                $" excluding them is {(TrySumIfOdd(x, y, out int sum) ? "" : "not")} odd.");
             Console.WriteLine($"The sum is {sum}");
             Console.WriteLine();
 
-            string str = "a";
+            // TrySumIfOddLatest
+            Console.WriteLine("Testing TrySumIfOddLatest including inputs in the sum");
+            int input1, input2;
+            int attempts = 0;
+            do
+            {
+                attempts++;
+
+                if (attempts > 1)
+                {
+                    Console.WriteLine("Invalid input: the second number must be greater than the first number. " +
+                        "Please try again))");
+                    Console.WriteLine();
+                }
+
+                Console.WriteLine("Enter an whole number");
+                input1 = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("Enter another whole number greater than the previous");
+                input2 = int.Parse(Console.ReadLine());
+
+            } while (input1 >= input2);
+                        
+            Console.WriteLine($"The numbers are {input1} and {input2}.");
+            Console.WriteLine($"The sum of numbers between {input1} and {input2}" +
+                $" including them is {(TrySumIfOddLatest(input1, input2, out int sum1) ? "" : "not")} odd.");
+            Console.WriteLine($"The sum is {sum1}");
+            
+            Console.WriteLine();
+
+            // Repeat method
+            string str = "--Hello";
             Console.WriteLine($"The string to be repeated is: {str}\n" +
                 $"The number of repetitions is: {x}");
             Console.WriteLine(Repeat(str, x));
