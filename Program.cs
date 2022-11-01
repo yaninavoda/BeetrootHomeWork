@@ -82,6 +82,10 @@
             return x + Repeat(x, --n);
         }
         
+        public static bool IsValidInput(int a, int b)
+        {
+            return a < b;
+        }
         static void Main(string[] args)
         {
             Random random = new Random();
