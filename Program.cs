@@ -1,161 +1,127 @@
-﻿namespace BeetrootHomework
+﻿using System.Globalization;
+
+namespace BeetrootHomework
 {
     internal class Program
     {
-        public static double MaxValue(double a, double b)
+        public static void Formula1(double x)
         {
-            return Math.Max(a, b);
+            double result = -6 * Math.Pow(x, 3) + 5 * Math.Pow(x, 2) - 10 * x + 15;
+            Console.WriteLine($"The result of \"-6*x^3+5*x^2-10*x+15\" is: {result}");
         }
 
-        public static double MaxValue(double a, double b, double c)
+        public static void Formula2(double x)
         {
-            if (a > b) return Math.Max(a, c);
-            else return Math.Max(b, c);
+            double result = Math.Abs(x) * Math.Sin(x);
+            Console.WriteLine($"The result of \"abs(x)*sin(x)\" is: {result}");
         }
 
-        public static double MaxValue(params double[] numbers)
+        public static void Formula3(double x)
         {
-            double maxValue = numbers[0];
-
-            for (int i = 1; i < numbers.Length; i++)
-            {
-                maxValue = Math.Max(maxValue, numbers[i]);
-            }
-            return maxValue;
+            double result = 2 * Math.PI * x;
+            Console.WriteLine($"The result of \"2*pi*x\" is: {result}");
         }
 
-        public static double MinValue(double a, double b)
+        public static void Formula4(double x, double y)
         {
-            return Math.Min(a, b);
-        }
-
-        public static double MinValue(double a, double b, double c)
-        {
-            if (a < b) return Math.Min(a, c);
-            else return Math.Min(b, c);
-        }
-
-        public static double MinValue(params double[] numbers)
-        {
-            double minValue = numbers[0];
-
-            for (int i = 1; i < numbers.Length; i++)
-            {
-                minValue = Math.Min(minValue, numbers[i]);
-            }
-            return minValue;
-        }
-
-        public static bool TrySumIfOdd(int a, int b, out int sum)
-        {
-            sum = 0;
-            int length = Math.Abs(a - b);
-            int smaller = (a < b) ? a : b;
-
-            for (int i = 0; i < length; i++)
-            {
-                sum = sum + smaller + i;
-            }
-            sum = (length == 0) ? 0 : sum - smaller;
-            if (sum % 2 != 0) return true;
-
-            return false;
-        }
-
-        public static bool TrySumIfOddLatest(int a, int b, out int sum1)
-        {
-            sum1 = 0;
-            int length = b - a;
-
-            for (int i = 0; i < length + 1; i++)
-            {
-                sum1 = sum1 + a + i;
-            }
-            
-            if (sum1 % 2 != 0) return true;
-
-            return false;
-        }
-        public static string Repeat(string x, int n)
-        {
-            if (n == 0) return string.Empty;
-            return x + Repeat(x, --n);
-        }
-        
-        public static bool IsValidInput(int a, int b)
-        {
-            return a < b;
+            double result = Math.Max(x, y);
+            Console.WriteLine($"The result of \"max(x, y)\" is: {result}");
         }
         static void Main(string[] args)
         {
-            Random random = new Random();
+            Console.WriteLine("Enter a whole number for the x variable: ");
+            string userInput1 = Console.ReadLine();
 
-            double a = random.NextDouble() * 10;
-            double b = random.NextDouble() * 10;
-            double c = random.NextDouble() * 10;
-            double d = random.NextDouble() * 10;
+            Console.WriteLine("Enter a whole number for the y variable: ");
+            string userInput2 = Console.ReadLine();
+            double result;
 
-            Console.WriteLine($"MaxValue of '{a:N3}' and '{b:N3}' is '{MaxValue(a, b):N3}'");
-            Console.WriteLine($"MaxValue of '{a:N3}', '{b:N3}' and '{c:N3}'" +
-                $" is '{MaxValue(a, b, c):N3}'");
-            Console.WriteLine($"MaxValue of '{a:N3}', '{b:N3}', '{c:N3}' and '{d:N3}'" +
-                $" is '{MaxValue(a, b, c, d):N3}'");
             Console.WriteLine();
-            Console.WriteLine($"MinValue of '{a:N3}' and '{b:N3}' is '{MinValue(a, b):N3}'");
-            Console.WriteLine($"MinValue of '{a:N3}', '{b:N3}' and '{c:N3}' " +
-                $"is '{MinValue(a, b, c):N3}'");
-            Console.WriteLine($"MinValue of '{a:N3}', '{b:N3}', '{c:N3}' and '{d:N3}'" +
-                $" is '{MinValue(a, b, c, d):N3}'");
+            Console.WriteLine("Here are the results of the calculations for the entered numbers: ");
             Console.WriteLine();
 
-
-            
-            int x = random.Next(2, 11);
-            int y = random.Next(2, 11);
-
-            Console.WriteLine($"The number are: {x} and {y}.");
-
-            // TrySumIfOdd excluding arguments from sum
-            Console.WriteLine($"The sum of numbers between {x} and {y}" +
-                $" excluding them is {(TrySumIfOdd(x, y, out int sum) ? "" : "not")} odd.");
-            Console.WriteLine($"The sum is {sum}");
-            Console.WriteLine();
-
-            // TrySumIfOddLatest
-            Console.WriteLine("Testing TrySumIfOddLatest including inputs in the sum");
-            int input1, input2;
-            int attempts = 0;
-            do
+            if (int.TryParse(userInput1, out int x))
             {
-                attempts++;
+                result = -6 * Math.Pow(x, 3) + 5 * Math.Pow(x, 2) - 10 * x + 15;
+                Console.WriteLine($"The result of \"-6*x^3+5*x^2-10*x+15\" is: {result}");
 
-                if (attempts > 1)
-                {
-                    Console.WriteLine("Invalid input: the second number must be greater than the first number. " +
-                        "Please try again))");
-                    Console.WriteLine();
-                }
+                result = Math.Abs(x) * Math.Sin(x);
+                Console.WriteLine($"The result of \"abs(x)*sin(x)\" is: {result}");
 
-                Console.WriteLine("Enter an whole number");
-                input1 = int.Parse(Console.ReadLine());
-
-                Console.WriteLine("Enter another whole number greater than the previous");
-                input2 = int.Parse(Console.ReadLine());
-
-            } while (input1 >= input2);
-                        
-            Console.WriteLine($"The numbers are {input1} and {input2}.");
-            Console.WriteLine($"The sum of numbers between {input1} and {input2}" +
-                $" including them is {(TrySumIfOddLatest(input1, input2, out int sum1) ? "" : "not")} odd.");
-            Console.WriteLine($"The sum is {sum1}");
-            
+                result = 2 * Math.PI * x;
+                Console.WriteLine($"The result of \"2*pi*x\" is: {result}");
+            }
+            else Console.WriteLine("You did'n enter a whole number.");
             Console.WriteLine();
 
-            // Repeat method
-            string str = "--Hello";
-            Console.WriteLine($"The string to be repeated is: {str}\n" +
-                $"The number of repetitions is: {x}");
-            Console.WriteLine(Repeat(str, x));
+            if ((int.TryParse(userInput2, out int y)) && (int.TryParse(userInput1, out int q)))
+            {
+                result = Math.Max(y, q);
+                Console.WriteLine($"The result of \"max(x, y)\" is: {result}");
+            }
+            else Console.WriteLine("At list one of your inputs was not a whole number.");
+            Console.WriteLine();
+
+            Console.WriteLine("Enter a floating-point number for the x variable: ");
+            string userInput3 = Console.ReadLine();
+
+            if (Double.TryParse(userInput3, NumberStyles.Float, CultureInfo.InvariantCulture, out double a))
+            {
+                result = -6 * Math.Pow(a, 3) + 5 * Math.Pow(a, 2) - 10 * a + 15;
+                Console.WriteLine($"The result of \"-6*x^3+5*x^2-10*x+15\" is: {result}");
+
+                result = Math.Abs(a) * Math.Sin(a);
+                Console.WriteLine($"The result of \"abs(x)*sin(x)\" is: {result}");
+
+                result = 2 * Math.PI * a;
+                Console.WriteLine($"The result of \"2*pi*x\" is: {result}");
+            }
+            else Console.WriteLine("You did'n enter a floating-point number.");
+
+
+            Console.WriteLine("Enter a floating-point number for the y variable: ");
+            string userInput4 = Console.ReadLine();
+
+            if (
+                double.TryParse(
+                    userInput3,
+                    NumberStyles.Float,
+                    CultureInfo.InvariantCulture,
+                    out double w)
+                &&
+                double.TryParse(
+                    userInput4,
+                    NumberStyles.Float,
+                    CultureInfo.InvariantCulture,
+                    out double r)
+                )
+            {
+                result = Math.Max(w, r);
+                Console.WriteLine($"The result of \"max(x, y)\" is: {result}");
+            }
+            else Console.WriteLine("At list one of your inputs was not a floating-point number.");
+
+
+            DateTime today = DateTime.Now;
+            int daysPassedFromNewYear = today.DayOfYear;
+            int thisYear = today.Year;
+
+            int endOfYear = new DateTime(thisYear, 12, 31).DayOfYear;
+
+            int daysLeftToNewYear = endOfYear - daysPassedFromNewYear;
+            Console.WriteLine();
+            Console.WriteLine($"{daysLeftToNewYear} days left to New Year.");
+            Console.WriteLine($"{daysPassedFromNewYear} days passed from New Year.");
+            Console.WriteLine();
+
+            Console.WriteLine();
+            Console.WriteLine("Here are the results of the calculations using methods named Formula1-Formula4:");
+            Console.WriteLine();
+
+            Formula1(daysLeftToNewYear);
+            Formula2(daysLeftToNewYear);
+            Formula3(daysLeftToNewYear);
+            Formula4(daysLeftToNewYear, daysPassedFromNewYear);
 
             Console.ReadKey();
         }
