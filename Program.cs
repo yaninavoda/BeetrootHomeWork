@@ -45,7 +45,14 @@
             }
             return minValue;
         }
-
+        /// <summary>
+        /// Allows to check if the sum of numbers between a and b (not including a and b) is an odd number.
+        /// Returns True if sum is odd, otherwise False.
+        /// </summary>
+        /// <param name="a">Arbitrary whole number</param>
+        /// <param name="b">Arbitrary whole number</param>
+        /// <param name="sum">Sum of numbers between a and b (not including a and b).</param>
+        /// <returns></returns>
         public static bool TrySumIfOdd(int a, int b, out int sum)
         {
             sum = 0;
@@ -61,7 +68,14 @@
 
             return false;
         }
-
+        /// <summary>
+        /// Allows to check if the sum of numbers between a and b (including a and b) is odd.
+        /// Returns True if sum is odd, otherwise False.
+        /// </summary>
+        /// <param name="a">A whole number</param>
+        /// <param name="b">A whole number greater than a</param>
+        /// <param name="sum1">Sum of numbers between a and b (including a and b).</param>
+        /// <returns></returns>
         public static bool TrySumIfOddLatest(int a, int b, out int sum1)
         {
             sum1 = 0;
@@ -113,7 +127,7 @@
             int x = random.Next(2, 11);
             int y = random.Next(2, 11);
 
-            Console.WriteLine($"The number are: {x} and {y}.");
+            Console.WriteLine($"The numbers are: {x} and {y}.");
 
             // TrySumIfOdd excluding arguments from sum
             Console.WriteLine($"The sum of numbers between {x} and {y}" +
