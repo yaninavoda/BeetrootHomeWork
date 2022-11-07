@@ -4,68 +4,37 @@
     {
         static void Main(string[] args)
         {
-            int X = 5;
-            int Y = 3;
-            int sum = 0;
-            int smaller;
-            int greater;
-
-            if (X <= Y)
-            {
-                smaller = X;
-                greater = Y;
-            }
-            else
-            {
-                smaller = Y;
-                greater = X;
-            }
-
-            while (smaller <= greater)
-            {
-                sum += smaller;
-                smaller++;
-            }
-            Console.WriteLine($"The sum of numbers between {(X <= Y ? X : Y)} and {greater} is {sum}.");
-
-            Console.WriteLine();
-
-            int number1;
-            int number2;
-
-#region TryParse
             Console.WriteLine("Enter an integer number: ");
-            if (int.TryParse(Console.ReadLine(), out number1))
+            if (int.TryParse(Console.ReadLine(), out int number1))
             {
                 Console.WriteLine("Enter another integer number: ");
-                if (int.TryParse(Console.ReadLine(), out number2))
+                if (int.TryParse(Console.ReadLine(), out int number2))
                 {
-                    if (number1 <= number2)
-                    {
-                        smaller = number1;
-                        greater = number2;
-                    }
-                    else
-                    {
-                        smaller = number2;
-                        greater = number1;
-                    }
+                    OrderNumbers(ref number1, ref number2);
 
-                    sum = 0;
+                    int sum = 0;
 
-                    while (smaller <= greater)
+                    while (number1 <= number2)
                     {
-                        sum += smaller;
-                        smaller++;
+                        sum += number1;
+                        number1++;
                     }
-                    Console.WriteLine($"The sum of numbers between {(number1 <= number2 ? number1 : number2)} and {greater} is {sum}.");
+                    Console.WriteLine($"The sum of numbers between numbers is {sum}.");
                 }
                 else Console.WriteLine("Invalid input.");
             }
             else Console.WriteLine("Invalid input.");
-#endregion
+
 
             Console.ReadKey();
         }
+public static void OrderNumbers(ref int a, ref int b)
+        {
+            if (b < a)
+            {
+                (a, b) = (b, a);
+            }
+        }
+
     }
 }
