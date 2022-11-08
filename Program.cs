@@ -19,19 +19,78 @@ namespace BeetrootHomework
             //Console.WriteLine(AdvancedFormat(invalidStr, femalePetNames));
 
             string testStr = @"~!@#$%^&*()_snfktJAQ352880+-=`|][{};:'?/>.<,\""";
-            foreach (var ctr in testStr)
-            {
-                Console.WriteLine($"[{ctr}] is symbol: {char.IsSymbol(ctr)}");
-            }
-            Analyze(testStr, out int numLetters, out int numDigits, out int numSymbols);
+           
+            //Analyze(testStr, out int numLetters, out int numDigits, out int numSymbols);
             
-            Console.WriteLine($"There are {numLetters} letters, {numDigits} digits and" +
-                $" {numSymbols} symbols in the input string.");
+            //Console.WriteLine($"There are {numLetters} letters, {numDigits} digits and" +
+               // $" {numSymbols} symbols in the input string.");
+
+            string test1 = "Hellomylovevndjkfghks";
+            string test2 = "qwerty";
+            //Console.WriteLine(Compare(test1, test2));
+            var duplicates = Duplicate(test1);
+            foreach (var item in duplicates) Console.WriteLine(item);
+            
+
 
 
             Console.ReadKey();
         }
 
+        public static bool Compare(string str1, string str2)
+        {
+            if (str1.Length == str2.Length)
+            {
+                for (int i = 0; i < str1.Length; i++)
+                {
+                    if (str1[i] != str2[i])
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        public static char[] Duplicate(string str)
+        {
+            string strLower = str.ToLower();
+            var results = new List<char>();
+            int index;
+            int count;
+
+            for (int i = 0; i < strLower.Length; i++)
+            {
+                index = strLower.IndexOf(strLower[i]);
+                count = 0;
+                while (index != -1)
+                {
+                    index = strLower.IndexOf(strLower[i], index + 1);
+                    count++;   
+                }
+            
+                if (count > 1 && !IsCharInList(strLower[i], results))
+                {
+                    results.Add(strLower[i]);
+                }
+            }
+
+            return results.ToArray();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ctr"></param>
+        /// <param name="list"></param>
+        /// <returns>Returns True if char is in list</returns>
+        public static bool IsCharInList(char ctr, List<char> list)
+        {
+            foreach(char c in list)
+            {
+                if (ctr == c) return true;
+            }
+            return false;
+        }
         public static void Analyze(string inputStr, 
             out int numLetters, 
             out int numDigits, 
