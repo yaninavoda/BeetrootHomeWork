@@ -7,23 +7,48 @@ namespace BeetrootHomework
         static void Main(string[] args)
         {
             string strFemale = "My favourite female pet names are {10}, {7}, {3} and {5}.";
-            string strMale = "My favourite male pet names are {8}, {4}, {10} and {2}.";
+
             string invalidStr = "Nothing will be replaced - {-3}, {3+2}, {112}, {abc}";
 
             string[] femalePetNames = { "Maggie", "Penny", "Saya", "Princess",
                            "Abby", "Laila", "Sadie", "Olivia",
                            "Starlight", "Talla", "Talula" };
 
-            string[] malePetNames = { "Rufus", "Bear", "Dakota", "Fido",
-                         "Vinny", "Samuel", "Koani", "Charly",
-                         "Prince", "Gizmo", "Soho" };
+            //Console.WriteLine(AdvancedFormat(strFemale, femalePetNames));
 
-            Console.WriteLine(AdvancedFormat(strFemale, femalePetNames));
-            Console.WriteLine(AdvancedFormat(strMale, malePetNames));
-            Console.WriteLine(AdvancedFormat(invalidStr, femalePetNames));
+            //Console.WriteLine(AdvancedFormat(invalidStr, femalePetNames));
+
+            string testStr = @"~!@#$%^&*()_snfktJAQ352880+-=`|][{};:'?/>.<,\""";
+            foreach (var ctr in testStr)
+            {
+                Console.WriteLine($"[{ctr}] is symbol: {char.IsSymbol(ctr)}");
+            }
+            Analyze(testStr, out int numLetters, out int numDigits, out int numSymbols);
+            
+            Console.WriteLine($"There are {numLetters} letters, {numDigits} digits and" +
+                $" {numSymbols} symbols in the input string.");
+
 
             Console.ReadKey();
         }
+
+        public static void Analyze(string inputStr, 
+            out int numLetters, 
+            out int numDigits, 
+            out int numSymbols)
+        {
+            numLetters = 0;
+            numDigits = 0;
+            numSymbols = 0;
+
+            foreach (var ctr in inputStr)
+            {
+                if (char.IsDigit(ctr)) numDigits++;
+                if (char.IsLetter(ctr)) numLetters++;
+                if (char.IsSymbol(ctr)) numSymbols++;
+            }
+        }
+
 
         private static string AdvancedFormat(string sourceStr, string[] possibleSubstitutions)
         {
