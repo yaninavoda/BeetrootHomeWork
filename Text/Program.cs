@@ -13,18 +13,7 @@ namespace Text
 
                 string input = Console.ReadLine();
 
-                PhonesStorage storage;
-
-                try
-                {
-                    storage = new PhonesStorage();
-                }
-                catch(DbFileNotFoundException ex)
-                {
-                    // create db file.
-                    Console.ReadKey();
-                    return;
-                }
+                PhonesStorage storage = new PhonesStorage();
                 
                 switch (input)
                 {

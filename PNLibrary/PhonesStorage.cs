@@ -92,7 +92,7 @@
         {
             if (!File.Exists(DbFilePath))
             {
-                throw new Exception("DB file doesn't exist.");
+                throw new DbFileNotFoundException();
             }
         }
     }
