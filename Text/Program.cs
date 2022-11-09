@@ -1,5 +1,5 @@
 ﻿using RandomNameGeneratorLibrary;
-using System.Reflection.Emit;
+using PNLibrary;
 
 namespace Text
 {
@@ -13,8 +13,18 @@ namespace Text
 
                 string input = Console.ReadLine();
 
-                var storage = new PhonesStorage();
-                
+                PhonesStorage storage;
+
+                try
+                {
+                    storage = new PhonesStorage();
+                }
+                catch(DbFileNotFoundException ex)
+                {
+                    // create db file.
+                    Console.ReadKey();
+                    return;
+                }
                 
                 switch (input)
                 {
@@ -38,6 +48,8 @@ namespace Text
             } while (true);
 
             Exit:;
+
+            Console.ReadKey();
         }
 
         private static void RunRandomGeneration()

@@ -1,6 +1,6 @@
-﻿namespace Text
+﻿namespace PNLibrary
 {
-    class PhoneRecord
+    public class PhoneRecord
     {
         public string FirstName { get; set; }
 
