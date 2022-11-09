@@ -10,33 +10,67 @@ namespace BeetrootHomework
 
             string invalidStr = "Nothing will be replaced - {-3}, {3+2}, {112}, {abc}";
 
+            string testStr = @"~!@#$%^&*()_snfktJAQ352880+-=`|][{};:'?/>.<,\""";
+
+            string test1 = "HdaecalolbwWql";
+            string test2 = "cbate";
+
             string[] femalePetNames = { "Maggie", "Penny", "Saya", "Princess",
                            "Abby", "Laila", "Sadie", "Olivia",
                            "Starlight", "Talla", "Talula" };
 
-            //Console.WriteLine(AdvancedFormat(strFemale, femalePetNames));
-
-            //Console.WriteLine(AdvancedFormat(invalidStr, femalePetNames));
-
-            string testStr = @"~!@#$%^&*()_snfktJAQ352880+-=`|][{};:'?/>.<,\""";
-           
-            //Analyze(testStr, out int numLetters, out int numDigits, out int numSymbols);
+            Console.WriteLine(AdvancedFormat(strFemale, femalePetNames));
+            Console.WriteLine(AdvancedFormat(invalidStr, femalePetNames));
+            Console.WriteLine();
             
-            //Console.WriteLine($"There are {numLetters} letters, {numDigits} digits and" +
-               // $" {numSymbols} symbols in the input string.");
+            Analyze(testStr, out int numLetters, out int numDigits, out int numSymbols);
 
-            string test1 = "Hellomylovevndjkfghks";
-            string test2 = "qwerty";
-            //Console.WriteLine(Compare(test1, test2));
+            Console.WriteLine($"There are {numLetters} letters, {numDigits} digits and" +
+                $" {numSymbols} symbols in the input string.");
+            Console.WriteLine();
+            
+            Console.Write("The strings are equal: ");
+            Console.WriteLine(Compare(test1, test2));
+            Console.WriteLine();
+
             var duplicates = Duplicate(test1);
-            foreach (var item in duplicates) Console.WriteLine(item);
-            
+            Console.WriteLine("These characters are duplicated in the string: ");
+            foreach (var item in duplicates) Console.Write($"[{item}], ");
+            Console.WriteLine();
+            Console.WriteLine();
+
+            Console.WriteLine("String letters in alphabetical order: ");
+            Console.WriteLine(Sort(test1));
 
 
 
             Console.ReadKey();
         }
+        
+        public static string Sort(string str)
+        {
+            string alphabet = "abcdefghijklmnopqrstuvwxyz";
+            var sBuilder = new StringBuilder();
 
+            str = str.ToLower();
+            
+            foreach (var letter in alphabet)
+            {
+                for (int i = 0; i < str.Length; i++)
+                {
+                    if (str[i] == letter)
+                    {
+                        sBuilder.Append(letter);
+                    }
+                }    
+            }
+           
+            return sBuilder.ToString();
+        }
+        public static void Swap(ref char a, ref char b)
+        {
+            (a, b) = (b, a);
+        }
         public static bool Compare(string str1, string str2)
         {
             if (str1.Length == str2.Length)
@@ -49,6 +83,8 @@ namespace BeetrootHomework
                     }
                 }
             }
+            else return false;
+
             return true;
         }
 
