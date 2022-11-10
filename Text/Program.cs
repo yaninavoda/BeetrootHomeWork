@@ -29,6 +29,9 @@ namespace Text
                     case "-e":
                         storage.Edit(int.Parse(Console.ReadLine()));
                         break;
+                    case "-s":
+                        storage.Search();
+                        break;
                     case "-out":
                         goto Exit;
                     default:

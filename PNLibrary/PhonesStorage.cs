@@ -2,14 +2,72 @@
 {
     public class PhonesStorage
     {
-        private readonly string DbFilePath = @"C:\PhoneDbFolder\phonedb.csv";
-        private readonly char ColumnSeparator = ',';
+        private readonly string DbFilePath = @"D:\beetroot\PhoneBook\phonedb.csv";
+        private readonly char ColumnSeparator = ';';
 
         public PhonesStorage()
         {
             EnshureDbFile();
         }
+        public void Search()
+        {
+            string choice;
+            Console.WriteLine("What do you want to find: Type (f) for first name, (l) for last name, (n) for phone number:");
+            choice = Console.ReadLine();
+            string? input;
+            string[]? records;
 
+            switch (choice)
+            {
+                case "l":
+                    Console.WriteLine("Enter the last name:");
+                    input = Console.ReadLine();
+                    records = GetAllRecord();
+
+                    for (int i = 0; i < records.Length; i++)
+                    {
+                        var recordObj = DeserializeRecord(records[i]);
+                        if (recordObj.LastName == input)
+                        {
+                            Print(recordObj, i + 1);
+                        }
+                    }
+                    break;
+
+                case "f":
+                    Console.WriteLine("Enter the first name:");
+                    input = Console.ReadLine();
+                    records = GetAllRecord();
+
+                    for (int i = 0; i < records.Length; i++)
+                    {
+                        var recordObj = DeserializeRecord(records[i]);
+                        if (recordObj.FirstName == input)
+                        {
+                            Print(recordObj, i + 1);
+                        }
+                    }
+                    break;
+
+                case "n":
+                    Console.WriteLine("Enter the phone number you want to find:");
+                    input = Console.ReadLine();
+                    records = GetAllRecord();
+
+                    for (int i = 0; i < records.Length; i++)
+                    {
+                        var recordObj = DeserializeRecord(records[i]);
+                        if (recordObj.PhoneNumber == input)
+                        {
+                            Print(recordObj, i + 1);
+                        }
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        }
         public void Edit(int orderNumber)
         {
             var records = GetAllRecord();
