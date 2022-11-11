@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Globalization;
+using System.Text;
 
 namespace BeetrootHomework
 {
@@ -6,14 +7,46 @@ namespace BeetrootHomework
     {
         static void Main(string[] args)
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+            Console.WriteLine("Enter a string containing letters, numbers and symbols:");
+            string testStr = Console.ReadLine();
+
+            Analyze(testStr, out int numLetters, out int numDigits, out int numSymbols);
+
+            Console.WriteLine($"There are {numLetters} letters, {numDigits} digits and" +
+                $" {numSymbols} symbols in the input string.");
+            Console.WriteLine();
+
+            Console.WriteLine("Enter a string to compare:");
+            string test1 = Console.ReadLine();
+            Console.WriteLine("Enter another string to compare with the first one:");
+            string test2 = Console.ReadLine();
+
+            Console.Write("The strings are equal: ");
+            Console.WriteLine(Compare(test1, test2));
+            Console.WriteLine();
+
+            Console.WriteLine("Enter a string to check for duplicates:");
+            testStr = Console.ReadLine();
+            var duplicates = Duplicate(testStr);
+            Console.WriteLine();
+            Console.WriteLine("These characters are duplicated in the string: ");
+            foreach (var item in duplicates) Console.Write($"[{item}], ");
+            Console.WriteLine();
+
+            Console.WriteLine();
+            Console.WriteLine("Enter a string to sort alphabetically:");
+            testStr = Console.ReadLine();
+            Console.WriteLine();
+            Console.WriteLine("String letters in alphabetical order: ");
+            Console.WriteLine(Sort(testStr));
+            Console.WriteLine();
+
+
             string strFemale = "My favourite female pet names are {10}, {7}, {3} and {5}.";
-
+            
             string invalidStr = "Nothing will be replaced - {-3}, {3+2}, {112}, {abc}";
-
-            string testStr = @"~!@#$%^&*()_snfktJAQ352880+-=`|][{};:'?/>.<,\""";
-
-            string test1 = "HdaecalolbwWql";
-            string test2 = "cbate";
 
             string[] femalePetNames = { "Maggie", "Penny", "Saya", "Princess",
                            "Abby", "Laila", "Sadie", "Olivia",
@@ -21,27 +54,6 @@ namespace BeetrootHomework
 
             Console.WriteLine(AdvancedFormat(strFemale, femalePetNames));
             Console.WriteLine(AdvancedFormat(invalidStr, femalePetNames));
-            Console.WriteLine();
-            
-            Analyze(testStr, out int numLetters, out int numDigits, out int numSymbols);
-
-            Console.WriteLine($"There are {numLetters} letters, {numDigits} digits and" +
-                $" {numSymbols} symbols in the input string.");
-            Console.WriteLine();
-            
-            Console.Write("The strings are equal: ");
-            Console.WriteLine(Compare(test1, test2));
-            Console.WriteLine();
-
-            var duplicates = Duplicate(test1);
-            Console.WriteLine("These characters are duplicated in the string: ");
-            foreach (var item in duplicates) Console.Write($"[{item}], ");
-            Console.WriteLine();
-            Console.WriteLine();
-
-            Console.WriteLine("String letters in alphabetical order: ");
-            Console.WriteLine(Sort(test1));
-
 
 
             Console.ReadKey();
@@ -49,7 +61,8 @@ namespace BeetrootHomework
         
         public static string Sort(string str)
         {
-            string alphabet = "abcdefghijklmnopqrstuvwxyz";
+            string alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
+          
             var sBuilder = new StringBuilder();
 
             str = str.ToLower();
@@ -59,18 +72,13 @@ namespace BeetrootHomework
                 for (int i = 0; i < str.Length; i++)
                 {
                     if (str[i] == letter)
-                    {
-                        sBuilder.Append(letter);
-                    }
+                        sBuilder.Append(letter);   
                 }    
             }
            
             return sBuilder.ToString();
         }
-        public static void Swap(ref char a, ref char b)
-        {
-            (a, b) = (b, a);
-        }
+        
         public static bool Compare(string str1, string str2)
         {
             if (str1.Length == str2.Length)
