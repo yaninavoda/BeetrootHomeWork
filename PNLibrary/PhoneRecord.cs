@@ -15,10 +15,10 @@
             PhoneNumber = ReadPhoneNumberFromConsole("Please enter phone number:");
         }
 
-        public PhoneRecord(string fName, string lName, string phoneNumber)
+        public PhoneRecord(string lName, string fName, string phoneNumber)
         {
-            FirstName = fName;
             LastName = lName;
+            FirstName = fName;           
             PhoneNumber = phoneNumber;
         }
 

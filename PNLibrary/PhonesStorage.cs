@@ -9,24 +9,28 @@
         {
             EnshureDbFile();
         }
+
         public void Search()
-        {
-            string choice;
+        { 
             Console.WriteLine("What do you want to find: Type (f) for first name, (l) for last name, (n) for phone number:");
-            choice = Console.ReadLine();
+            string? choice = Console.ReadLine();
             string? input;
             string[]? records;
-
+            PhoneRecord? recordObj;
             switch (choice)
             {
                 case "l":
                     Console.WriteLine("Enter the last name:");
                     input = Console.ReadLine();
+                    
                     records = GetAllRecord();
 
-                    for (int i = 0; i < records.Length; i++)
+                    //var index = Array.BinarySearch(records, input);
+                    //recordObj = DeserializeRecord(records[index]);
+                    //Print(recordObj, index + 1);
+                    for (int i = 1; i < records.Length; i++)
                     {
-                        var recordObj = DeserializeRecord(records[i]);
+                        recordObj = DeserializeRecord(records[i]);
                         if (recordObj.LastName == input)
                         {
                             Print(recordObj, i + 1);
@@ -39,9 +43,9 @@
                     input = Console.ReadLine();
                     records = GetAllRecord();
 
-                    for (int i = 0; i < records.Length; i++)
+                    for (int i = 1; i < records.Length; i++)
                     {
-                        var recordObj = DeserializeRecord(records[i]);
+                        recordObj = DeserializeRecord(records[i]);
                         if (recordObj.FirstName == input)
                         {
                             Print(recordObj, i + 1);
@@ -54,9 +58,9 @@
                     input = Console.ReadLine();
                     records = GetAllRecord();
 
-                    for (int i = 0; i < records.Length; i++)
+                    for (int i = 1; i < records.Length; i++)
                     {
-                        var recordObj = DeserializeRecord(records[i]);
+                        recordObj = DeserializeRecord(records[i]);
                         if (recordObj.PhoneNumber == input)
                         {
                             Print(recordObj, i + 1);
@@ -71,10 +75,9 @@
         public void Edit(int orderNumber)
         {
             var records = GetAllRecord();
-            var index = orderNumber - 1;
-
+            
             // Print error order number;
-            if (index < 0 || index > records.Length - 1)
+            if (orderNumber < 0 || orderNumber > records.Length - 1)
             {
                 var redBuffer = Console.ForegroundColor;
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -82,7 +85,7 @@
                 Console.ForegroundColor = redBuffer;
             }
 
-            var recordObj = DeserializeRecord(records[index]);
+            var recordObj = DeserializeRecord(records[orderNumber]);
 
             var yellowBuffer = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -92,21 +95,21 @@
 
             var updatedRecord = new PhoneRecord();
 
-            records[index] = SerializeRecord(updatedRecord);
+            records[orderNumber] = SerializeRecord(updatedRecord);
 
             File.WriteAllLines(DbFilePath, records.Select(x => x.Trim()));
         }
 
         public void PrintAll()
         {
-            var records = GetAllRecord();
-
-            for (int i = 0; i < records.Length; i++)
+            string[] records = GetAllRecord();
+            
+            for (int i = 1; i < records.Length; i++)
             {
                 string? record = records[i];
-                var desirializedRecord = DeserializeRecord(record);
+                var deserializedRecord = DeserializeRecord(record);
 
-                Print(desirializedRecord, i + 1);
+                Print(deserializedRecord, i);
             }
         }
 
@@ -117,27 +120,43 @@
 
         public void Print(PhoneRecord phoneRecord, int orderNumber)
         {
-            Console.WriteLine($"[{orderNumber}]: +{phoneRecord.PhoneNumber} - {phoneRecord.FirstName} {phoneRecord.LastName}");
+            Console.WriteLine($"[{orderNumber}]: +{phoneRecord.PhoneNumber} - {phoneRecord.LastName} {phoneRecord.FirstName}");
         }
 
         public void Save(PhoneRecord phoneRecord)
         {
             File.AppendAllLines(DbFilePath, new[] { SerializeRecord(phoneRecord) });
         }
-
-        private string[] GetAllRecord()
+        public void Save(string[] records)
         {
-            return File.ReadAllText(DbFilePath).Split('\n', StringSplitOptions.RemoveEmptyEntries);
+            File.AppendAllLines(DbFilePath, records);
         }
 
-        private string SerializeRecord(PhoneRecord phoneRecord)
+        private string[] GetAllRecord()
+        {   
+            var list = new List<string>();
+            string[] recordStrings = File.ReadAllText(DbFilePath).Split('\n', StringSplitOptions.RemoveEmptyEntries);
+            
+            for (int i = 0; i < recordStrings.Length; i++)
+            {    
+                if (recordStrings[i].Length > 13)
+                    list.Add(recordStrings[i]);
+            }
+            
+            recordStrings = list.ToArray();
+            Array.Sort(recordStrings);
+
+            return recordStrings;
+        }
+
+        public string SerializeRecord(PhoneRecord phoneRecord)
         {
-            return $"{phoneRecord.FirstName}{ColumnSeparator}" +
-                $"{phoneRecord.LastName}{ColumnSeparator}" +
+            return $"{phoneRecord.LastName}{ColumnSeparator}" +
+                $"{phoneRecord.FirstName}{ColumnSeparator}" +
                 $"{phoneRecord.PhoneNumber}{ColumnSeparator}";
         }
 
-        private PhoneRecord DeserializeRecord(string record)
+        public PhoneRecord DeserializeRecord(string record)
         {
             string[] cellValues = record.Split(ColumnSeparator);
 

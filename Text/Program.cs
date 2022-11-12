@@ -11,7 +11,7 @@ namespace Text
             {
                 Console.WriteLine("Choose operation (-g) - genarate, (-c) - create, (-out) - exit, (-p) - print all, (-e) - edit:");
 
-                string input = Console.ReadLine();
+                string? input = Console.ReadLine();
 
                 PhonesStorage storage = new PhonesStorage();
                 
@@ -21,12 +21,14 @@ namespace Text
                         RunRandomGeneration();
                         break;
                     case "-c":
+
                         storage.Save(new PhoneRecord());
                         break;
                     case "-p":
                         storage.PrintAll();
                         break;
                     case "-e":
+                        Console.WriteLine("Enter the order number of the entry you want to edit:");
                         storage.Edit(int.Parse(Console.ReadLine()));
                         break;
                     case "-s":
@@ -46,19 +48,27 @@ namespace Text
 
         private static void RunRandomGeneration()
         {
-            var placeGenerator = new PersonNameGenerator();
+            var nameGenerator = new PersonNameGenerator();
             var randomNumberGenerator = new Random();
             var storage = new PhonesStorage();
 
-            for (var i = 0; i < 50; i++)
+            List<string> recordStrings = new List<string>();
+            PhoneRecord newRecord;
+            string? recordStr;
+            for (var i = 0; i < 10; i++)
             {
-                var newRecord = new PhoneRecord(placeGenerator.GenerateRandomFirstName(),
-                    placeGenerator.GenerateRandomLastName(),
+                newRecord = new PhoneRecord(nameGenerator.GenerateRandomLastName(),
+                    nameGenerator.GenerateRandomFirstName(),
                     $"{randomNumberGenerator.Next(38010, 38099)}" +
                         $"{randomNumberGenerator.Next(1111111, 9999999)}");
-
-                storage.Save(newRecord);
+                
+                recordStr = storage.SerializeRecord(newRecord);
+                recordStrings.Add(recordStr);
             }
+
+            recordStrings.Sort();
+            string[] records = recordStrings.ToArray();
+            storage.Save(records);         
         }
     }
 }
