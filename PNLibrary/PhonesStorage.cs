@@ -9,7 +9,19 @@
         {
             EnshureDbFile();
         }
+        private string[] DeriveLastnames()
+        {
+            string[] allRecords = GetAllRecord();
+            string[] lastNames = new string[allRecords.Length];
 
+            for (int i = 0; i < allRecords.Length; i++)
+            {    
+                PhoneRecord recordObj = DeserializeRecord(allRecords[i]);
+                string lastName = recordObj.LastName;
+                lastNames[i] = lastName;
+            }
+            return lastNames;
+        }
         public void Search()
         { 
             Console.WriteLine("What do you want to find: Type (f) for first name, (l) for last name, (n) for phone number:");
@@ -22,12 +34,8 @@
                 case "l":
                     Console.WriteLine("Enter the last name:");
                     input = Console.ReadLine();
-                    
                     records = GetAllRecord();
 
-                    //var index = Array.BinarySearch(records, input);
-                    //recordObj = DeserializeRecord(records[index]);
-                    //Print(recordObj, index + 1);
                     for (int i = 1; i < records.Length; i++)
                     {
                         recordObj = DeserializeRecord(records[i]);
