@@ -32,10 +32,8 @@
 
             myStackString.CopyToStack(arrayStr);
             Console.WriteLine("Stack copied to array looks as follows:");
-            foreach (var item in arrayStr)
-            {
-                Console.WriteLine(item);
-            }
+          
+            Array.ForEach(arrayStr, Console.WriteLine);
 
             #endregion
 
@@ -90,6 +88,16 @@
 
             #endregion
 
+            var realStack = new Stack<int>();
+            realStack.Push(1);
+            realStack.Push(2);
+            realStack.Push(3);
+            realStack.Push(4);
+
+            foreach (var item in realStack)
+            {
+                Console.WriteLine(item);
+            }
             Console.ReadKey();
         }
 

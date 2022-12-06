@@ -51,9 +51,11 @@ namespace BeetrootHomework
         }
         public void CopyToStack(T[] arr) 
         {
-            for (int i = 0; i < _elements.Count; i++)
+            int index = 0;
+            for (int i = _elements.Count - 1; i >= 0; i--)
             {
-                arr[i] = _elements[i];
+                arr[index] = _elements[i];
+                index++;
             }
         }
 
@@ -67,27 +69,17 @@ namespace BeetrootHomework
         }
         public IEnumerator<T> GetEnumerator()
         {
-            //_elements.Reverse();
-
-            var enumerator = _elements.GetEnumerator();
-            
-
-            return enumerator;
+            return _elements.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            //_elements.Reverse();
-            var enumerator = _elements.GetEnumerator();
-            
-            return enumerator;
+            return _elements.GetEnumerator();
         }
 
         private int GetLastIndex()
         {
-            int index = _elements.Count - 1;
-
-            return index;
+            return _elements.Count - 1;
         }
     }
 }
