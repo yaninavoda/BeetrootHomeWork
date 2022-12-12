@@ -4,7 +4,14 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            while (true)
+            {
+                var gameFlow = new GameFlow();
+
+                gameFlow.StartGame();
+
+                Console.ReadKey();
+            }
         }
     }
 }
